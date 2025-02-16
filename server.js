@@ -8,8 +8,12 @@ app.use(bodyParser.json()); //req.body
 const PORT = process.env.PORT || 3000;
 
 const userRoutes = require('./routes/userRoutes.js')
+const candidateRoutes = require('./routes/candidateRoutes.js')
+
+const {jwtAuthMiddleware} = require('./jwt.js')
 
 app.use('/user', userRoutes)
+app.use('/candidate', jwtAuthMiddleware, candidateRoutes)
 
 app.listen(PORT, () => {
     console.log('Server listening on port 3008')
