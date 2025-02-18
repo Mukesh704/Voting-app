@@ -26,14 +26,14 @@ router.post('/:candidateID', jwtAuthMiddleware, async(req, res) => {
         }
 
         if(user.isVoted) {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 error: 'You Have Already Voted'
             })
         }
 
         if(user.role == "admin") {
-            res.status(400).json({
+            return res.status(400).json({
                 success: false,
                 error: "Admin Is Not Allowed To Vote"
             })
