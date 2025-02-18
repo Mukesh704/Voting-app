@@ -107,4 +107,27 @@ router.delete('/:candidateID', async(req, res) => {
     }
 })
 
+router.get('/', async(req, res) => {
+    try {
+        const candidates = await Candidate.find();
+        if(!candidates) {
+            return res.status(404).json({
+                success: false,
+                error: 'Candidates Not Found'
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            response: candidates
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            success: false,
+            error: 'Internal Server Error'
+        })
+    }
+})
+
 module.exports = router;

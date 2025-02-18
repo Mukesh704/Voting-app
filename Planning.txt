@@ -17,17 +17,17 @@ User Authentication:
     /login -> POST - Login to an existing account
 
 Voting:
-    /candidates -> GET - Gets the list of candidates
     /vote/:candidateId -> POST - Vote for a specific candidate
-
-Vote Counts:
-    /vote/counts -> GET - Get the list of candidates sorted by their vote Counts
+    /vote/count -> GET - Get the list of candidates sorted by their vote Counts 
 
 User Profile:
     /profile -> GET - Get the users profile information
     /profile/:password -> PUT - Change the users password
 
 Admin Candidate Management:
-    /candidates -> POST - Create a new candidate
-    /candidates/:candidateId -> PUT - Update an existing candidate
-    /candidates/:candidateId -> DELETE - Delete a candidate from the list
+    /candidate -> POST - Create a new candidate
+    /candidate/:candidateId -> PUT - Update an existing candidate
+    /candidate/:candidateId -> DELETE - Delete a candidate from the list
+
+Candidate list access
+    /candidate -> GET - Gets the list of candidates
