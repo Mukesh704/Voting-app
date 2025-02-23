@@ -3,7 +3,7 @@ const router = express.Router();
 const {jwtAuthMiddleware, generateToken} = require('../jwt.js')
 const User = require('./../models/User.js')
 
-router.post('/signup', async(req, res) => {
+/*router.post('/signup', async(req, res) => {
     try {
         const data = req.body;
 
@@ -27,6 +27,41 @@ router.post('/signup', async(req, res) => {
             success: false,
             error: 'Internal Server Error'
         })
+    }
+})*/
+
+// Advanced signup route (Ensures there's only one admin in the database)
+router.post('/signup', async(req, res) => {
+    try {
+        const {name, age, email, mobile, address, aadharCardNumber, password, role} = req.body
+
+        if(role === 'admin') {
+            const checkRole = await User.findOne({role: 'admin'})
+            if(checkRole) {
+                return res.status(400).json({
+                    success: false,
+                    error: 'Admin Already Exists'
+                })
+            }
+        }
+
+        const newUser = new User({name, age, email, mobile, address, aadharCardNumber, password, role})
+        const response = await newUser.save()
+        console.log('User Data Saved')
+
+        const payload = {
+            id: response.id
+        }
+        const token = generateToken(payload)
+
+        res.status(200).json({
+            success: true,
+            response: response,
+            token: token
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json('Internal Server Error')
     }
 })
 
